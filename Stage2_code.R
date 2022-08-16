@@ -33,3 +33,5 @@ for (j in 2:385){
   my_list<-c(my_list,file[new[which.min(S),2],1])
 }
 my_list
+
+## Therefore, my_list gives the set of timepoints for each of the 384 well plates dataset respectively.
