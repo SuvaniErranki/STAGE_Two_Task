@@ -1,6 +1,7 @@
 file<-read.delim("384wp_data.txt", header = TRUE, sep = "\t", dec = ".")
 View(file)
 
+
 #####In One Go
 my_list<-c()
 for (j in 2:385){
@@ -11,27 +12,24 @@ for (j in 2:385){
     slope<-c(slope,s)
     
   }
-    v<-slope[which.max(slope)]
-    #print(v)
-    new<-data.frame()
-    T<-c()
-    S<-c()
-    #print(typeof(v))
-    
-    for(t in which.max(slope):17){
-       #print(typeof(slope[t]))
-      if (slope[t]< v){
-        T<-c(T,t)
-        #print(slope[t])
-        S<-c(S,slope[t])
-        new<-data.frame(S,T)
-      } #else {print("nothing")}
-    }
   
-  #print(j)
-  file[new[which.min(S),2],1]
-  my_list<-c(my_list,file[new[which.min(S),2],1])
+  
+    sub_slopes <- slope[which.max(slope):length(slope)]
+    posn <- (which.min(abs(sub_slopes-0)) + (length(slope) - length(sub_slopes)))
+    
+    print(file[posn,1])
+  
+    my_list<-c(my_list,file[posn,1])
 }
 my_list
 
-## Therefore, my_list gives the set of timepoints for each of the 384 well plates dataset respectively.
+colnames(file)
+file_dup<-file[,2:385]
+colnames(file_dup)
+
+sample_names<-colnames(file_dup)
+Entry_time<-my_list
+
+results_table<-data.frame(sample_names,Entry_time)
+View(results_table)
+write.csv(results_table,"results_table.csv")
